@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/zopencommunity/libiconvport/actions/workflows/codeql.yml/badge.svg)](https://github.com/zopencommunity/libiconvport/actions/workflows/codeql.yml)
+
 [![Automatic version updates](https://github.com/ZOSOpenTools/libiconvport/actions/workflows/bump.yml/badge.svg)](https://github.com/ZOSOpenTools/libiconvport/actions/workflows/bump.yml)
 
 # libiconv
