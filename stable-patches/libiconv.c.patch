@@ -1,0 +1,33 @@
+diff --git a/lib/iconv.c b/lib/iconv.c
+index 1324897..d9ce393 100644
+--- a/lib/iconv.c
++++ b/lib/iconv.c
+@@ -242,7 +242,6 @@ iconv_t iconv_open (const char* tocode, const char* fromcode)
+   unsigned int to_surface;
+   int transliterate;
+   unsigned int discard_ilseq;
+-
+ #include "iconv_open1.h"
+ 
+   cd = (struct conv_struct *) malloc(from_wchar != to_wchar
+@@ -254,7 +253,19 @@ iconv_t iconv_open (const char* tocode, const char* fromcode)
+   }
+ 
+ #include "iconv_open2.h"
+-
++/* Check environment variable for EBCDIC z/OS UNIX newline handling */
++  const char *envvar_value = getenv("ICONV_EBCDIC_ZOS_UNIX");
++  if (envvar_value != NULL && envvar_value[0] != '\0') {
++	  /* Enable z/OS UNIX surface for both directions if EBCDIC encoding */
++	if (from_index >= ei_ebcdic037 && from_index <= ei_ebcdic16804) {		  
++	  	cd->isurface |= ICONV_SURFACE_EBCDIC_ZOS_UNIX;
++		/* Also set osurface when converting FROM EBCDIC to any encoding */
++		cd->osurface |= ICONV_SURFACE_EBCDIC_ZOS_UNIX;
++	  }
++	 if (to_index >= ei_ebcdic037 && to_index <= ei_ebcdic16804) {
++		  cd->osurface |= ICONV_SURFACE_EBCDIC_ZOS_UNIX;
++	  }
++  }
+   return (iconv_t)cd;
+ invalid:
+   errno = EINVAL;
