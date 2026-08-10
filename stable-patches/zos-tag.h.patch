@@ -1,0 +1,26 @@
+diff --git a/src/zos-tag.h b/src/zos-tag.h
+index e3b2bc4..b52f9db 100644
+--- a/src/zos-tag.h
++++ b/src/zos-tag.h
+@@ -65,6 +65,10 @@ static __ccsid_t map_encoding_to_ccsid (const char* encoding)
+   #define ISO8859_UL_LEN (sizeof(ISO8859_UL)-1)
+   #define CP "CP"
+   #define CP_LEN (sizeof(CP)-1)
++  #define IBM_DASH "IBM-"
++  #define IBM_DASH_LEN (sizeof(IBM_DASH)-1)
++  #define IBM "IBM"
++  #define IBM_LEN (sizeof(IBM)-1)
+   #define NO_PFX ""
+   #define NO_PFX_LEN (0)
+ 
+@@ -72,6 +76,10 @@ static __ccsid_t map_encoding_to_ccsid (const char* encoding)
+     chgpfx(updtenc, enclen, ISO8859_DASH_LEN, ISO8859, ISO8859_LEN);
+   } else if (enclen > ISO8859_UL_LEN && !memcmp(ISO8859_UL, encoding, ISO8859_UL_LEN)) {
+     chgpfx(updtenc, enclen, ISO8859_UL_LEN, ISO8859, ISO8859_LEN);
++  } else if (enclen > IBM_DASH_LEN && !memcmp(IBM_DASH, encoding, IBM_DASH_LEN)) {
++    chgpfx(updtenc, enclen, IBM_DASH_LEN, NO_PFX, NO_PFX_LEN);
++  } else if (enclen > IBM_LEN && !memcmp(IBM, encoding, IBM_LEN)) { 
++    chgpfx(updtenc, enclen, IBM_LEN, NO_PFX, NO_PFX_LEN);
+   } else if (enclen > CP_LEN && !memcmp(CP, encoding, CP_LEN)) {
+     chgpfx(updtenc, enclen, CP_LEN, NO_PFX, NO_PFX_LEN);
+   }
